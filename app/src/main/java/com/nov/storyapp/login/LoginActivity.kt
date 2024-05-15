@@ -10,7 +10,7 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.nov.storyapp.MainActivity
+import com.nov.storyapp.main.MainActivity
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.helper.ViewModelFactory
 import com.nov.storyapp.data.response.LoginResponse

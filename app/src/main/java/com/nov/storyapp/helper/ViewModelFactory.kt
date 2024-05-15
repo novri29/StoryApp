@@ -3,7 +3,7 @@ package com.nov.storyapp.helper
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.nov.storyapp.MainViewModel
+import com.nov.storyapp.main.MainViewModel
 import com.nov.storyapp.data.repository.StoryRepository
 import com.nov.storyapp.di.Injection
 import com.nov.storyapp.login.LoginViewModel
