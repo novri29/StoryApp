@@ -10,13 +10,13 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.nov.storyapp.main.MainActivity
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.helper.ViewModelFactory
 import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputLayout
 import android.content.Context
+import com.nov.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -101,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                         showLoading(false)
                         val response: LoginResponse = result.data
                         saveLoginStatus(true)  // Save login status
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, HomeActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
                         finish()
@@ -146,7 +146,7 @@ class LoginActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("StoryAppPreferences", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
         if (isLoggedIn) {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish()
