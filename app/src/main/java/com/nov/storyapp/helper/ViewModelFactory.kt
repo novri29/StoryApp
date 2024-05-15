@@ -1,8 +1,9 @@
-package com.nov.storyapp
+package com.nov.storyapp.helper
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.nov.storyapp.MainViewModel
 import com.nov.storyapp.data.repository.StoryRepository
 import com.nov.storyapp.di.Injection
 import com.nov.storyapp.login.LoginViewModel
@@ -13,10 +14,10 @@ class ViewModelFactory(private val repository: StoryRepository) : ViewModelProvi
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            /**
+
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(repository) as T
-            }**/
+            }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
             }

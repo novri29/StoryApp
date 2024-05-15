@@ -7,19 +7,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.textfield.TextInputLayout
-import com.nov.storyapp.R
-import com.nov.storyapp.ResultState
-import com.nov.storyapp.ViewModelFactory
+import com.nov.storyapp.helper.ResultState
+import com.nov.storyapp.helper.ViewModelFactory
 import com.nov.storyapp.databinding.ActivityRegisterBinding
 import com.nov.storyapp.login.LoginActivity
-import com.nov.storyapp.login.LoginViewModel
 
 class RegisterActivity : AppCompatActivity() {
 

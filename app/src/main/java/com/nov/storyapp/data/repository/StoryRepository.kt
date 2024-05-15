@@ -1,11 +1,8 @@
 package com.nov.storyapp.data.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import com.google.gson.Gson
-import com.nov.storyapp.AuthPreference
-import com.nov.storyapp.ResultState
+import com.nov.storyapp.helper.AuthPreference
+import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.data.api.ApiConfig
 import com.nov.storyapp.data.api.ApiService
 import com.nov.storyapp.data.model.DataModel
@@ -29,7 +26,7 @@ class StoryRepository private constructor(
         authPreference.logout()
     }
 
-    suspend fun register(name: String, email: String, password: String): ResultState<RegisterResponse>{
+    suspend fun register(name: String, email: String, password: String): ResultState<RegisterResponse> {
         ResultState.Loading
         return try{
             val response = apiService.register(name, email, password)

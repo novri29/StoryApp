@@ -1,10 +1,10 @@
 package com.nov.storyapp.di
 
 import android.content.Context
-import com.nov.storyapp.AuthPreference
+import com.nov.storyapp.helper.AuthPreference
 import com.nov.storyapp.data.api.ApiConfig
 import com.nov.storyapp.data.repository.StoryRepository
-import com.nov.storyapp.dataStore
+import com.nov.storyapp.helper.dataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nov.storyapp.ResultState
+import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.data.model.DataModel
 import com.nov.storyapp.data.repository.StoryRepository
 import com.nov.storyapp.data.response.LoginResponse

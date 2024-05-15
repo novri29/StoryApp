@@ -11,13 +11,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.nov.storyapp.MainActivity
-import com.nov.storyapp.ResultState
-import com.nov.storyapp.ViewModelFactory
+import com.nov.storyapp.helper.ResultState
+import com.nov.storyapp.helper.ViewModelFactory
 import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputLayout
 import android.content.Context
-import android.content.SharedPreferences
 
 class LoginActivity : AppCompatActivity() {
 
@@ -102,6 +101,11 @@ class LoginActivity : AppCompatActivity() {
                         showLoading(false)
                         val response: LoginResponse = result.data
                         saveLoginStatus(true)  // Save login status
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                        /**
                         AlertDialog.Builder(this).apply {
                             setTitle("Login Berhasil!")
                             setMessage("Anda login sebagai ${response.loginResult?.name}")
@@ -114,6 +118,7 @@ class LoginActivity : AppCompatActivity() {
                             create()
                             show()
                         }
+                        **/
                     }
                     is ResultState.Error -> {
                         showLoading(false)

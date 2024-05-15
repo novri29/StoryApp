@@ -1,4 +1,4 @@
-package com.nov.storyapp
+package com.nov.storyapp.helper
 
 sealed class ResultState<out R> private constructor(){
     data class Success<out T>(val data: T) : ResultState<T>()
