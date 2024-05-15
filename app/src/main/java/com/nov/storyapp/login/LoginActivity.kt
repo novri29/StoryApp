@@ -117,7 +117,13 @@ class LoginActivity : AppCompatActivity() {
                     }
                     is ResultState.Error -> {
                         showLoading(false)
-                        // Tampilkan pesan error
+                        AlertDialog.Builder(this).apply {
+                            setTitle("Login Gagal")
+                            setMessage("Email atau Password yang anda masukkan salah")
+                            setPositiveButton("Coba Lagi") { _, _ -> }
+                            create()
+                            show()
+                        }
                     }
                 }
             }
