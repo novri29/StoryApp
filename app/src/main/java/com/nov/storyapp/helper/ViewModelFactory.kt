@@ -3,6 +3,7 @@ package com.nov.storyapp.helper
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.nov.HomeViewModel
 import com.nov.storyapp.main.MainViewModel
 import com.nov.storyapp.data.repository.StoryRepository
 import com.nov.storyapp.di.Injection
@@ -23,6 +24,9 @@ class ViewModelFactory(private val repository: StoryRepository) : ViewModelProvi
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
