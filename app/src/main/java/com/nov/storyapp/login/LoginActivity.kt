@@ -11,12 +11,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.nov.storyapp.MainActivity
-import com.nov.storyapp.R
 import com.nov.storyapp.ResultState
 import com.nov.storyapp.ViewModelFactory
 import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputLayout
+import android.content.Context
+import android.content.SharedPreferences
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        checkLoginStatus()
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -54,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
 
+            // Validasi input
             if (email.isEmpty() && password.isEmpty()) {
                 setError(binding.emailEditTextLayout, "Harap isi \"Email\" terlebih dahulu")
                 setError(binding.passwordEditTextLayout, "Harap isi \"Password\" terlebih dahulu")
@@ -97,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
                     is ResultState.Success -> {
                         showLoading(false)
                         val response: LoginResponse = result.data
+                        saveLoginStatus(true)  // Save login status
                         AlertDialog.Builder(this).apply {
                             setTitle("Login Berhasil!")
                             setMessage("Anda login sebagai ${response.loginResult?.name}")
@@ -112,18 +117,28 @@ class LoginActivity : AppCompatActivity() {
                     }
                     is ResultState.Error -> {
                         showLoading(false)
-                        /**
-                        AlertDialog.Builder(this).apply {
-                        setTitle("Maaf")
-                        setMessage(result.error)
-                        setPositiveButton("Coba Lagi") { _, _ -> }
-                        create()
-                        show()
-                        }
-                         **/
+                        // Tampilkan pesan error
                     }
                 }
             }
+        }
+    }
+
+    private fun saveLoginStatus(isLoggedIn: Boolean) {
+        val sharedPreferences = getSharedPreferences("StoryAppPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
+    }
+
+    private fun checkLoginStatus() {
+        val sharedPreferences = getSharedPreferences("StoryAppPreferences", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        if (isLoggedIn) {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
         }
     }
 
