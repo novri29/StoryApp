@@ -1,5 +1,6 @@
 package com.nov.storyapp.data.repository
 
+import androidx.lifecycle.liveData
 import com.google.gson.Gson
 import com.nov.storyapp.helper.AuthPreference
 import com.nov.storyapp.helper.ResultState
@@ -84,6 +85,19 @@ class StoryRepository private constructor(
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody.message
             return ResultState.Error(errorMessage ?: "Unknown Error")
+        }
+    }
+
+    fun getStories() = liveData {
+        emit(ResultState.Loading)
+        try {
+            val response = apiService.getStories()
+            emit(ResultState.Success(response))
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody.message
+            ResultState.Error(errorMessage.toString())
         }
     }
 
