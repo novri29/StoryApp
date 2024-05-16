@@ -12,16 +12,16 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nov.storyapp.R
+import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.databinding.ActivityHomeBinding
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.helper.ViewModelFactory
 import com.nov.storyapp.login.LoginActivity
-import com.nov.storyapp.main.MainActivity
 import com.nov.storyapp.setting.SettingActivity
 
 class HomeActivity : AppCompatActivity() {
@@ -40,6 +40,13 @@ class HomeActivity : AppCompatActivity() {
         adapter = HomeAdapter()
 
         binding.rvStory.adapter = adapter
+
+        // Load cache
+        val cachedStories = loadCache()
+        if (cachedStories != null) {
+            adapter.setList(cachedStories)
+        }
+
         viewModel.getSession().observe(this) { user ->
             Log.d("token", "onCreate: ${user.token}")
             Log.d("user", "onCreate: ${user.isLogin}, name: ${user.name}")
@@ -51,15 +58,16 @@ class HomeActivity : AppCompatActivity() {
                 if (story != null) {
                     when (story) {
                         is ResultState.Loading -> {
-                            showLoading(true)
+                            showLoading(false)
                         }
 
                         is ResultState.Success -> {
                             val storyData = story.data.listStory
-                            val storyAdapter = HomeAdapter()
-                            storyAdapter.setList(storyData)
-                            binding.rvStory.adapter = storyAdapter
+                            adapter.setList(storyData)
                             showLoading(false)
+
+                            // Save to cache
+                            saveCache(storyData)
                         }
                         is ResultState.Error -> {
                             showLoading(false)
@@ -68,6 +76,27 @@ class HomeActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun saveCache(stories: List<ListStoryItem?>?) {
+        val sharedPreferences = getSharedPreferences("story_cache", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(stories)
+        editor.putString("cached_stories", json)
+        editor.apply()
+    }
+
+    private fun loadCache(): List<ListStoryItem>? {
+        val sharedPreferences = getSharedPreferences("story_cache", MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("cached_stories", null)
+        return if (json != null) {
+            val type = object : TypeToken<List<ListStoryItem>>() {}.type
+            gson.fromJson(json, type)
+        } else {
+            null
         }
     }
 
@@ -110,5 +139,4 @@ class HomeActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
     }
-
 }
