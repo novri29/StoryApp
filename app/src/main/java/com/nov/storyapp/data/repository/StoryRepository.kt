@@ -87,8 +87,6 @@ class StoryRepository private constructor(
         }
     }
 
-
-
     companion object {
         private var instance: StoryRepository? = null
         fun getInstance(

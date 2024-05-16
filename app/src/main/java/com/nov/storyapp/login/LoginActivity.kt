@@ -29,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        supportActionBar?.hide()
         checkLoginStatus()
 
         binding = ActivityLoginBinding.inflate(layoutInflater)

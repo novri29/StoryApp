@@ -1,10 +1,21 @@
 package com.nov.storyapp.data.api
 
+import android.credentials.CredentialDescription
+import com.nov.storyapp.data.response.AllStoryResponse
+import com.nov.storyapp.data.response.DetailStoryResponse
 import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.data.response.RegisterResponse
+import com.nov.storyapp.data.response.UploadStoryResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Path
+import java.io.File
 
 interface ApiService {
     @FormUrlEncoded
@@ -21,4 +32,26 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): LoginResponse
+
+    @GET("stories")
+    suspend fun getStories(): AllStoryResponse
+
+    @GET("stories/{id}")
+    suspend fun getDetailStory(
+        @Path("id") id: String
+    ): DetailStoryResponse
+
+    @Multipart
+    @POST("stories")
+    suspend fun postStory(
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): UploadStoryResponse
+
+    @Multipart
+    @POST("stories/guest")
+    suspend fun postStoryGuest(
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): UploadStoryResponse
 }
