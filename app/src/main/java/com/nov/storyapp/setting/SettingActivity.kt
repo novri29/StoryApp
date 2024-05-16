@@ -1,4 +1,4 @@
-package com.nov
+package com.nov.storyapp.setting
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,18 +9,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.nov.storyapp.R
 import com.nov.storyapp.databinding.ActivityHomeBinding
+import com.nov.storyapp.databinding.ActivitySettingBinding
 import com.nov.storyapp.helper.ViewModelFactory
-import com.nov.storyapp.login.LoginActivity
+import com.nov.storyapp.home.HomeViewModel
 import com.nov.storyapp.main.MainActivity
 
-class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeBinding
-    private val viewModel: HomeViewModel by viewModels { ViewModelFactory.getInstance(this) }
-
+class SettingActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySettingBinding
+    private val viewModel: SettingViewModel by viewModels { ViewModelFactory.getInstance(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Pengecekan status login
@@ -37,10 +37,13 @@ class HomeActivity : AppCompatActivity() {
             viewModel.logout()
             clearLoginStatus()
 
-            // Arahkan pengguna ke LoginActivity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        viewModel.getData().observe(this) {
+            binding.test.text = it.name
         }
     }
 

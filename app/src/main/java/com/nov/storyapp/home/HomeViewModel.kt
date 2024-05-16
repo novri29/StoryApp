@@ -1,4 +1,4 @@
-package com.nov
+package com.nov.storyapp.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -9,13 +9,5 @@ import com.nov.storyapp.data.repository.StoryRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: StoryRepository) :  ViewModel(){
-    fun logout() {
-        viewModelScope.launch {
-            repository.logout()
-        }
-    }
 
-    fun getData(): LiveData<DataModel> {
-        return repository.getSession().asLiveData()
-    }
 }

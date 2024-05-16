@@ -6,10 +6,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.nov.HomeActivity
+import com.nov.storyapp.home.HomeActivity
 import com.nov.storyapp.R
 import com.nov.storyapp.databinding.ActivityMainBinding
 import com.nov.storyapp.helper.ViewModelFactory

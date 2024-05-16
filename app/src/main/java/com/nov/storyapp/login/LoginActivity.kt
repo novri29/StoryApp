@@ -16,7 +16,7 @@ import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputLayout
 import android.content.Context
-import com.nov.HomeActivity
+import com.nov.storyapp.home.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 
