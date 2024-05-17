@@ -121,14 +121,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
+        enableEdgeToEdge() // for Android 10 and above
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN) //Android 9 and below
         }
     }
 

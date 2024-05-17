@@ -1,10 +1,12 @@
 package com.nov.storyapp.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.nov.storyapp.DetailStoryActivity
 import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.databinding.StoriesItemBinding
 import com.nov.storyapp.helper.toDateFormat
@@ -39,6 +41,11 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
             Glide.with(binding.root.context)
                 .load(item.photoUrl)
                 .into(binding.ivPhoto)
+            binding.root.setOnClickListener {
+                val intentDetailStory = Intent(binding.root.context, DetailStoryActivity::class.java)
+                intentDetailStory.putExtra(DetailStoryActivity.ID, item.id)
+                binding.root.context.startActivity(intentDetailStory)
+            }
         }
     }
 }

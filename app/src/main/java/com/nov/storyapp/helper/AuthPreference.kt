@@ -46,7 +46,6 @@ class AuthPreference private constructor(private val dataStore: DataStore<Prefer
         private val TOKEN = stringPreferencesKey("token")
         private val IS_LOGIN = booleanPreferencesKey("isLogin")
 
-
         fun getInstance(dataStore: DataStore<Preferences>): AuthPreference {
             return INSTANCE ?: synchronized(this) {
                 val instance = AuthPreference(dataStore)

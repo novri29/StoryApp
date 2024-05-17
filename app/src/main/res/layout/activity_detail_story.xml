@@ -1,12 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailStoryActivity">
+    tools:context=".DetailStoryActivity"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_detailPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="24dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_detailName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/iv_detailPhoto"
+            app:layout_constraintTop_toBottomOf="@+id/iv_detailPhoto"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/tv_detailDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_detailName"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detailName"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/tv_detailDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:justificationMode="inter_word"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_detailDate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detailDate"
+            tools:text="@tools:sample/lorem/random" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -13,5 +13,5 @@ const val MAX_SIZE = 1000000
 fun String.toDateFormat(): String {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
     val dateFormatted = inputFormat.parse(this) as Date
-    return DateFormat.getDateInstance(DateFormat.FULL).format(dateFormatted)
+    return DateFormat.getDateInstance(DateFormat.FULL, Locale("in", "ID")).format(dateFormatted) // Set Hari Indonesia
 }

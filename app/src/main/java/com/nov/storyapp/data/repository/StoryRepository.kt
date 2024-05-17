@@ -2,6 +2,7 @@ package com.nov.storyapp.data.repository
 
 import androidx.lifecycle.liveData
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.nov.storyapp.helper.AuthPreference
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.data.api.ApiConfig
@@ -12,6 +13,8 @@ import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.data.response.RegisterResponse
 import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
+import java.io.IOException
+import kotlin.coroutines.RestrictsSuspension
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
@@ -98,6 +101,25 @@ class StoryRepository private constructor(
             val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
             val errorMessage = errorBody.message
             ResultState.Error(errorMessage.toString())
+        }
+    }
+
+    fun getDetailStories(id: String) = liveData {
+        emit(ResultState.Loading)
+        try {
+            val response = apiService.getDetailStory(id)
+            emit(ResultState.Success(response))
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
+            val errorMessage = errorBody.message
+            emit(ResultState.Error(errorMessage.toString()))
+        } catch (e: IOException) {
+            emit(ResultState.Error("Network error occurred. Please check your connection and try again."))
+        } catch (e: JsonSyntaxException) {
+            emit(ResultState.Error("Error parsing server response."))
+        } catch (e: Exception) {
+            emit(ResultState.Error("An unexpected error occurred: ${e.message}"))
         }
     }
 
