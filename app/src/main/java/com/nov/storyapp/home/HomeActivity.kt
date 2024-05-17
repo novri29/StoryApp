@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -23,6 +24,9 @@ import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.helper.ViewModelFactory
 import com.nov.storyapp.login.LoginActivity
 import com.nov.storyapp.setting.SettingActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -53,39 +57,47 @@ class HomeActivity : AppCompatActivity() {
             if (!user.isLogin) {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
+            } else {
+                observeStoryItems()
             }
-            viewModel.storyItem.observe(this) { story ->
-                if (story != null) {
-                    when (story) {
-                        is ResultState.Loading -> {
-                            showLoading(false)
-                        }
+        }
+    }
 
-                        is ResultState.Success -> {
-                            val storyData = story.data.listStory
-                            adapter.setList(storyData)
-                            showLoading(false)
+    private fun observeStoryItems() {
+        viewModel.storyItem.observe(this) { story ->
+            if (story != null) {
+                when (story) {
+                    is ResultState.Loading -> {
+                        showLoading(false)
+                    }
+                    is ResultState.Success -> {
+                        val storyData = story.data.listStory
+                        adapter.setList(storyData)
+                        showLoading(false)
 
-                            // Save to cache
+                        // Save to cache in a coroutine
+                        lifecycleScope.launch {
                             saveCache(storyData)
                         }
-                        is ResultState.Error -> {
-                            showLoading(false)
-                            Toast.makeText(this, "ERROR: ${story.error}", Toast.LENGTH_SHORT).show()
-                        }
+                    }
+                    is ResultState.Error -> {
+                        showLoading(false)
+                        Toast.makeText(this, "ERROR: ${story.error}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
     }
 
-    private fun saveCache(stories: List<ListStoryItem?>?) {
-        val sharedPreferences = getSharedPreferences("story_cache", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        val gson = Gson()
-        val json = gson.toJson(stories)
-        editor.putString("cached_stories", json)
-        editor.apply()
+    private suspend fun saveCache(stories: List<ListStoryItem?>?) {
+        withContext(Dispatchers.IO) {
+            val sharedPreferences = getSharedPreferences("story_cache", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            val gson = Gson()
+            val json = gson.toJson(stories)
+            editor.putString("cached_stories", json)
+            editor.apply()
+        }
     }
 
     private fun loadCache(): List<ListStoryItem>? {
@@ -110,7 +122,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setupView() {
         @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
             window.setFlags(

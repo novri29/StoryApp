@@ -106,20 +106,6 @@ class LoginActivity : AppCompatActivity() {
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
                         finish()
-                        /**
-                        AlertDialog.Builder(this).apply {
-                            setTitle("Login Berhasil!")
-                            setMessage("Anda login sebagai ${response.loginResult?.name}")
-                            setPositiveButton("Lanjut") { _, _ ->
-                                val intent = Intent(context, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
-                                finish()
-                            }
-                            create()
-                            show()
-                        }
-                        **/
                     }
                     is ResultState.Error -> {
                         showLoading(false)
@@ -180,10 +166,14 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setError(textInputLayout: TextInputLayout, error: String) {
         textInputLayout.error = error
+        if (textInputLayout == binding.passwordEditTextLayout) {
+            textInputLayout.errorIconDrawable = null // Hide the error icon for the password field
+        }
     }
 
     private fun clearError(textInputLayout: TextInputLayout) {
         textInputLayout.error = null
+        textInputLayout.errorIconDrawable = null // Also clear the error icon when clearing the error
     }
 
     private fun showLoading(isLoading: Boolean) {

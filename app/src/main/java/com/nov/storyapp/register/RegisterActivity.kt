@@ -52,14 +52,14 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.edRegisterEmail.text?.toString()?:""
             val password = binding.edRegisterPassword.text?.toString()?:""
 
-            if (email.isEmpty() && email.isEmpty() && password.isEmpty()) {
+            if (name.isEmpty() && email.isEmpty() && password.isEmpty()) {
                 setError(binding.nameEditTextLayout, "Harap isi \"Nama\" terlebih dahulu")
                 setError(binding.emailEditTextLayout, "Harap isi \"Email\" terlebih dahulu")
                 setError(binding.passwordEditTextLayout, "Harap isi \"Password\" terlebih dahulu")
                 return@setOnClickListener
             }
 
-            if (email.isEmpty()) {
+            if (name.isEmpty()) {
                 setError(binding.nameEditTextLayout, "Harap isi \"Nama\" terlebih dahulu")
                 return@setOnClickListener
             } else {
@@ -99,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
                             data.message?.let { message ->
                                 AlertDialog.Builder(this).apply {
                                     setTitle("Pendaftaran Berhasil")
-                                    setMessage("Akun dengan $email sudah jadi nih")
+                                    setMessage("Akun dengan $email sudah dapat digunakan")
                                     setPositiveButton("Lanjut") { _,_ ->
                                         finish()
                                         startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
@@ -153,10 +153,14 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setError(textInputLayout: TextInputLayout, error: String) {
         textInputLayout.error = error
+        if (textInputLayout == binding.passwordEditTextLayout) {
+            textInputLayout.errorIconDrawable = null
+        }
     }
 
     private fun clearError(textInputLayout: TextInputLayout) {
         textInputLayout.error = null
+        textInputLayout.errorIconDrawable = null
     }
 
     private fun showLoading(isLoading: Boolean) {
