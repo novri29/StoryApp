@@ -1,5 +1,8 @@
 package com.nov.storyapp.data.repository
 
+import android.credentials.CredentialDescription
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -11,7 +14,10 @@ import com.nov.storyapp.data.model.DataModel
 import com.nov.storyapp.data.response.ErrorResponse
 import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.data.response.RegisterResponse
+import com.nov.storyapp.data.response.UploadStoryResponse
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
 import java.io.IOException
 import kotlin.coroutines.RestrictsSuspension
@@ -120,6 +126,25 @@ class StoryRepository private constructor(
             emit(ResultState.Error("Error parsing server response."))
         } catch (e: Exception) {
             emit(ResultState.Error("An unexpected error occurred: ${e.message}"))
+        }
+    }
+
+    fun postStory(mutltipartBody: MultipartBody.Part,
+                  description: RequestBody
+    ): LiveData<ResultState<UploadStoryResponse>> = liveData {
+                emit(ResultState.Loading)
+        try {
+            val client = apiService.postStory(mutltipartBody, description)
+            if (client.error == false) {
+                emit(ResultState.Success(client))
+            } else {
+                emit(ResultState.Error(client.message.toString()))
+            }
+        } catch (e: HttpException) {
+            Log.e("PostStoryHTTP", "${e.message}")
+            emit(ResultState.Error(e.message.toString()))
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

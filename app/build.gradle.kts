@@ -73,4 +73,8 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.8.8")
 
+    //Camera
+    implementation("androidx.camera:camera-camera2:1.3.3")
+    implementation("androidx.camera:camera-lifecycle:1.3.3")
+    implementation("androidx.camera:camera-view:1.3.3")
 }

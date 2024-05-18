@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nov.storyapp.R
+import com.nov.storyapp.StoryActivity
 import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.databinding.ActivityHomeBinding
 import com.nov.storyapp.helper.ResultState
@@ -60,6 +61,11 @@ class HomeActivity : AppCompatActivity() {
             } else {
                 observeStoryItems()
             }
+        }
+
+        binding.buttonPost.setOnClickListener {
+            val intent = Intent(this@HomeActivity, StoryActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.nov.storyapp.DetailStoryActivity
+import com.nov.storyapp.detail.DetailStoryActivity
 import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.databinding.StoriesItemBinding
 import com.nov.storyapp.helper.toDateFormat

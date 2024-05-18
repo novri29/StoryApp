@@ -24,4 +24,9 @@
     <string name="login_failed">"Login failed"</string>
 
     <string name="setting">Setting</string>
+    <string name="story">Description story</string>
+    <string name="cameraX">CameraX</string>
+    <string name="gallery">Gallery</string>
+    <string name="post_story">Post Your Story Here</string>
+    <string name="insert">Insert Story</string>
 </resources>
