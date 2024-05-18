@@ -1,6 +1,5 @@
 package com.nov.storyapp.data.repository
 
-import android.credentials.CredentialDescription
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -20,7 +19,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.HttpException
 import java.io.IOException
-import kotlin.coroutines.RestrictsSuspension
 
 class StoryRepository private constructor(
     private val apiService: ApiService,
@@ -54,20 +52,6 @@ class StoryRepository private constructor(
     }
 
     suspend fun login(email: String, password: String): ResultState<LoginResponse> {
-        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
-
-        if (email.isEmpty()) {
-            return ResultState.Error("Harap Mengisi \"Email\" Terlebih Dahulu")
-        }
-        if (!email.matches(emailRegex)) {
-            return ResultState.Error("\"Email\" Harus Berbentuk Email")
-        }
-        if (password.isEmpty()) {
-            return ResultState.Error("Harap Mengisi \"Password\" Terlebih Dahulu")
-        }
-        if (password.length < 8) {
-            return ResultState.Error("Make sure your password is at least 8 characters")
-        }
 
         ResultState.Loading
         try {
@@ -78,7 +62,7 @@ class StoryRepository private constructor(
                 val loginResult = response.loginResult
                 if (loginResult != null) {
                     val sesi = DataModel(
-                        name = email,
+                        name = loginResult.name ?: "",
                         token = loginResult.token ?: "",
                         isLogin = true
                     )

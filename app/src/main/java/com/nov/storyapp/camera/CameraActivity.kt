@@ -1,4 +1,4 @@
-package com.nov.storyapp
+package com.nov.storyapp.camera
 
 import android.content.Intent
 import android.os.Build
@@ -18,12 +18,14 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.nov.storyapp.databinding.ActivityCameraBinding
 import com.nov.storyapp.helper.tempFile
+import java.util.concurrent.Executors
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-
-    private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+    private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
+    private val cameraExecutor = Executors.newSingleThreadExecutor()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,6 +42,8 @@ class CameraActivity : AppCompatActivity() {
         binding.captureImage.setOnClickListener {
             captureImage()
         }
+
+        startCamera()
     }
 
     private fun captureImage() {
@@ -89,7 +93,7 @@ class CameraActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Toast.makeText(this@CameraActivity, "Error Opening the Camera", Toast.LENGTH_SHORT)
                     .show()
-                Log.e("StartCamera", "StartCamera: $e")
+                Log.e(TAG, "StartCamera: $e")
             }
         }, ContextCompat.getMainExecutor(this))
     }
@@ -105,7 +109,13 @@ class CameraActivity : AppCompatActivity() {
             )
         }
     }
-    companion object{
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
+    }
+
+    companion object {
         private const val TAG = "CameraActivity"
         const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
         const val CAMERAX_RESULT = 101

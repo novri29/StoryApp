@@ -2,6 +2,7 @@ package com.nov.storyapp.setting
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -42,8 +43,13 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
 
-        viewModel.getData().observe(this) {
-            binding.test.text = it.name
+        binding.changeLanguange.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            true
+        }
+
+        viewModel.getData().observe(this) { user ->
+            binding.tvEmail.text = "Hello, ${user.name}"
         }
     }
 

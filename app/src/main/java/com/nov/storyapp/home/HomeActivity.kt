@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nov.storyapp.R
-import com.nov.storyapp.StoryActivity
+import com.nov.storyapp.story.StoryActivity
 import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.databinding.ActivityHomeBinding
 import com.nov.storyapp.helper.ResultState

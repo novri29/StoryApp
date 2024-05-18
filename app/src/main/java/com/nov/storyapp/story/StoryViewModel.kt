@@ -1,4 +1,4 @@
-package com.nov.storyapp
+package com.nov.storyapp.story
 
 import android.credentials.CredentialDescription
 import androidx.lifecycle.LiveData
