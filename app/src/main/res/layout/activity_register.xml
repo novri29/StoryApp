@@ -7,12 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".register.RegisterActivity">
 
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.033"
+        app:srcCompat="@drawable/dicodingregister" />
+
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="@string/title_signup_page"
         android:textColor="@color/black"
@@ -21,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_image" />
 
     <TextView
         android:id="@+id/nameTextView"
@@ -44,17 +56,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView"
-        app:startIconDrawable="@drawable/ic_baseline_person_24">
+        app:startIconDrawable="@drawable/ic_baseline_person_24"
+        android:hint="Nama">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ed_register_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ed_register_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingStart="48dp"/> <!-- Menambahkan padding untuk teks input -->
+</com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
+
+<TextView
         android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,14 +90,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView"
-        app:startIconDrawable="@drawable/ic_baseline_email_24">
+        app:startIconDrawable="@drawable/ic_baseline_email_24"
+        android:hint="Email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_register_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:paddingStart="48dp"/> <!-- Menambahkan padding untuk teks input -->
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -107,7 +124,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView"
-        app:startIconDrawable="@drawable/ic_baseline_lock_24">
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        android:hint="Password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_register_password"
@@ -115,7 +133,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:paddingStart="48dp"/> <!-- Menambahkan padding untuk teks input -->/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -123,7 +142,7 @@
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/navy"
         android:text="@string/register"
@@ -131,6 +150,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout" />
+
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="88dp"
+        android:text="@string/allready_account"
+        app:layout_constraintEnd_toEndOf="@+id/RegisterButton"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterButton" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-16dp"
+        android:background="@android:color/transparent"
+        android:text="@string/login_here"
+        android:textColor="@color/link_color"
+        android:textSize="14sp"
+        android:transitionName="account2"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_login"
+        app:layout_constraintStart_toEndOf="@+id/tv_login"
+        app:layout_constraintTop_toTopOf="@+id/tv_login"
+        app:layout_constraintVertical_bias="0.551" />
 
     <ProgressBar
         android:id="@+id/progressBar"

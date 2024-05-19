@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="navy">#2D3D4F</color>
     <color name="red">#800000</color>
+    <color name="link_color">#0000EE</color>
 </resources>

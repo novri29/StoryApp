@@ -36,6 +36,11 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         setupAction()
         setupTextWatchers()
     }

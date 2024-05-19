@@ -17,6 +17,7 @@ import com.nov.storyapp.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputLayout
 import android.content.Context
 import com.nov.storyapp.home.HomeActivity
+import com.nov.storyapp.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -38,6 +39,11 @@ class LoginActivity : AppCompatActivity() {
         setupView()
         setupAction()
         setupTextWatchers()
+
+        binding.btnRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupView() {
