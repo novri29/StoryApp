@@ -1,4 +1,4 @@
-package com.nov.storyapp.camera
+package com.nov.storyapp.view.camera
 
 import android.content.Intent
 import android.os.Build
@@ -16,6 +16,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.nov.storyapp.R
 import com.nov.storyapp.databinding.ActivityCameraBinding
 import com.nov.storyapp.helper.tempFile
 import java.util.concurrent.Executors
@@ -64,7 +65,9 @@ class CameraActivity : AppCompatActivity() {
 
                 override fun onError(exception: ImageCaptureException) {
                     Toast.makeText(
-                        this@CameraActivity,"Error Pengambilan Gambar", Toast.LENGTH_SHORT
+                        this@CameraActivity,
+                        getString(R.string.image_capture_error),
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -91,8 +94,11 @@ class CameraActivity : AppCompatActivity() {
                     imageCapture
                 )
             } catch (e: Exception) {
-                Toast.makeText(this@CameraActivity, "Error Opening the Camera", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(
+                    this@CameraActivity,
+                    getString(R.string.camera_open_error),
+                    Toast.LENGTH_SHORT
+                ).show()
                 Log.e(TAG, "StartCamera: $e")
             }
         }, ContextCompat.getMainExecutor(this))

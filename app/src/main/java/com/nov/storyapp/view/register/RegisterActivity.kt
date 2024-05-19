@@ -1,4 +1,4 @@
-package com.nov.storyapp.register
+package com.nov.storyapp.view.register
 
 import android.content.Intent
 import android.os.Build
@@ -12,6 +12,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.textfield.TextInputLayout
@@ -19,7 +21,7 @@ import com.nov.storyapp.R
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.helper.ViewModelFactory
 import com.nov.storyapp.databinding.ActivityRegisterBinding
-import com.nov.storyapp.login.LoginActivity
+import com.nov.storyapp.view.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -38,7 +40,21 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            val optionCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this@RegisterActivity,
+                Pair(binding.ivImage, "logo"),
+                Pair(binding.titleTextView, "title1"),
+                Pair(binding.nameTextView, "name1"),
+                Pair(binding.nameEditTextLayout, "name2"),
+                Pair(binding.emailTextView, "email1"),
+                Pair(binding.emailEditTextLayout, "email2"),
+                Pair(binding.passwordTextView, "password1"),
+                Pair(binding.passwordEditTextLayout, "password2"),
+                Pair(binding.RegisterButton, "register"),
+                Pair(binding.tvLogin, "register1"),
+                Pair(binding.btnLogin, "register2")
+            )
+            startActivity(intent, optionCompat.toBundle())
         }
 
         setupAction()
@@ -48,40 +64,40 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.RegisterButton.setOnClickListener {
-            val name = binding.edRegisterName.text?.toString()?:""
-            val email = binding.edRegisterEmail.text?.toString()?:""
-            val password = binding.edRegisterPassword.text?.toString()?:""
+            val name = binding.edRegisterName.text?.toString() ?: ""
+            val email = binding.edRegisterEmail.text?.toString() ?: ""
+            val password = binding.edRegisterPassword.text?.toString() ?: ""
 
             if (name.isEmpty() && email.isEmpty() && password.isEmpty()) {
-                setError(binding.nameEditTextLayout, "Harap isi \"Nama\" terlebih dahulu")
-                setError(binding.emailEditTextLayout, "Harap isi \"Email\" terlebih dahulu")
-                setError(binding.passwordEditTextLayout, "Harap isi \"Password\" terlebih dahulu")
+                setError(binding.nameEditTextLayout, getString(R.string.error_empty_name))
+                setError(binding.emailEditTextLayout, getString(R.string.error_empty_email))
+                setError(binding.passwordEditTextLayout, getString(R.string.error_empty_password))
                 return@setOnClickListener
             }
 
             if (name.isEmpty()) {
-                setError(binding.nameEditTextLayout, "Harap isi \"Nama\" terlebih dahulu")
+                setError(binding.nameEditTextLayout, getString(R.string.error_empty_name))
                 return@setOnClickListener
             } else {
                 clearError(binding.nameEditTextLayout)
             }
 
             if (email.isEmpty()) {
-                setError(binding.emailEditTextLayout, "Harap isi \"Email\" terlebih dahulu")
+                setError(binding.emailEditTextLayout, getString(R.string.error_empty_email))
                 return@setOnClickListener
             } else {
                 clearError(binding.emailEditTextLayout)
             }
 
             if (!isValidEmail(email)) {
-                setError(binding.emailEditTextLayout, "\"Email\" harus valid menggunakan @")
+                setError(binding.emailEditTextLayout, getString(R.string.error_invalid_email))
                 return@setOnClickListener
             } else {
                 clearError(binding.emailEditTextLayout)
             }
 
             if (password.isEmpty()) {
-                setError(binding.passwordEditTextLayout, "Harap isi \"Password\" terlebih dahulu")
+                setError(binding.passwordEditTextLayout, getString(R.string.error_empty_password))
                 return@setOnClickListener
             } else {
                 clearError(binding.passwordEditTextLayout)
@@ -98,11 +114,16 @@ class RegisterActivity : AppCompatActivity() {
                         result.data.let { data ->
                             data.message?.let { message ->
                                 AlertDialog.Builder(this).apply {
-                                    setTitle("Pendaftaran Berhasil")
-                                    setMessage("Akun dengan $email sudah dapat digunakan")
-                                    setPositiveButton("Lanjut") { _,_ ->
+                                    setTitle(getString(R.string.register_success_title))
+                                    setMessage(getString(R.string.register_success_message, email))
+                                    setPositiveButton(getString(R.string.continuee)) { _, _ ->
                                         finish()
-                                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                                        startActivity(
+                                            Intent(
+                                                this@RegisterActivity,
+                                                LoginActivity::class.java
+                                            )
+                                        )
                                     }
                                     create()
                                     show()
@@ -110,24 +131,25 @@ class RegisterActivity : AppCompatActivity() {
                             }
                         }
                     }
+
                     is ResultState.Error -> {
                         showLoading(false)
                         AlertDialog.Builder(this).apply {
-                            setTitle("Maaf...")
+                            setTitle(getString(R.string.register_failed_title))
                             setMessage(result.error)
-                            setPositiveButton("Coba Lagi") { _, _ ->
-                                create()
-                                show()
-                            }
+                            setPositiveButton(getString(R.string.retry)) { _, _ -> }
+                            create()
+                            show()
                         }
                     }
+
                     is ResultState.Loading -> showLoading(true)
                 }
             }
         }
     }
 
-    private fun isValidEmail(email: String): Boolean {
+        private fun isValidEmail(email: String): Boolean {
         val atIndex = email.indexOf('@')
         val dotIndex = email.lastIndexOf('.')
 
@@ -141,7 +163,7 @@ class RegisterActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val password = s.toString()
                 if (password.length < 8) {
-                    setError(binding.passwordEditTextLayout, "Password harus memiliki setidaknya 8 karakter")
+                    setError(binding.passwordEditTextLayout, getString(R.string.error_short_password))
                 } else {
                     clearError(binding.passwordEditTextLayout)
                 }

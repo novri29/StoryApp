@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".story.StoryActivity">
+    tools:context=".view.story.StoryActivity">
 
     <ImageView
         android:id="@+id/iv_story"
@@ -17,7 +17,8 @@
         app:layout_constraintEnd_toStartOf="@+id/button_gallery"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        app:srcCompat="@drawable/dicodingmainactivity"/>
 
     <Button
         android:id="@+id/button_gallery"

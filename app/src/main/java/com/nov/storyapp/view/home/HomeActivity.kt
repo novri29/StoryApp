@@ -1,4 +1,4 @@
-package com.nov.storyapp.home
+package com.nov.storyapp.view.home
 
 import android.content.Intent
 import android.os.Build
@@ -11,22 +11,24 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nov.storyapp.R
-import com.nov.storyapp.story.StoryActivity
+import com.nov.storyapp.view.story.StoryActivity
 import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.databinding.ActivityHomeBinding
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.helper.ViewModelFactory
-import com.nov.storyapp.login.LoginActivity
-import com.nov.storyapp.setting.SettingActivity
+import com.nov.storyapp.view.login.LoginActivity
+import com.nov.storyapp.view.setting.SettingActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.core.util.Pair
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -64,7 +66,12 @@ class HomeActivity : AppCompatActivity() {
 
         binding.buttonPost.setOnClickListener {
             val intent = Intent(this@HomeActivity, StoryActivity::class.java)
-            startActivity(intent)
+            val optionsCompat: ActivityOptionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this@HomeActivity,
+                    Pair(binding.buttonPost, "button_post")
+            )
+            startActivity(intent, optionsCompat.toBundle())
         }
     }
 

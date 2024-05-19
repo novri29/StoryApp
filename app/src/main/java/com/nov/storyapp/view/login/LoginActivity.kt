@@ -1,12 +1,10 @@
-package com.nov.storyapp.login
+package com.nov.storyapp.view.login
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.WindowInsets
-import android.view.WindowManager
+import androidx.core.util.Pair
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +14,11 @@ import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputLayout
 import android.content.Context
-import com.nov.storyapp.home.HomeActivity
-import com.nov.storyapp.register.RegisterActivity
+import androidx.activity.enableEdgeToEdge
+import androidx.core.app.ActivityOptionsCompat
+import com.nov.storyapp.R
+import com.nov.storyapp.view.home.HomeActivity
+import com.nov.storyapp.view.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -29,32 +30,34 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
         supportActionBar?.hide()
         checkLoginStatus()
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupView()
         setupAction()
         setupTextWatchers()
 
         binding.btnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-    }
+            val optionCompat: ActivityOptionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this@LoginActivity,
+                Pair(binding.imageView, "logo"),
+                Pair(binding.titleTextView, "title1"),
+                Pair(binding.messageTextView, "title2"),
+                Pair(binding.emailTextView, "email1"),
+                Pair(binding.emailEditTextLayout, "email2"),
+                Pair(binding.passwordTextView, "password1"),
+                Pair(binding.passwordEditTextLayout, "password2"),
+                Pair(binding.loginButton, "login"),
+                Pair(binding.tvRegister, "account1"),
+                Pair(binding.btnRegister, "account2")
 
-    private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
+            startActivity(intent, optionCompat.toBundle())
         }
     }
 
@@ -65,34 +68,34 @@ class LoginActivity : AppCompatActivity() {
 
             // Validasi input
             if (email.isEmpty() && password.isEmpty()) {
-                setError(binding.emailEditTextLayout, "Harap isi \"Email\" terlebih dahulu")
-                setError(binding.passwordEditTextLayout, "Harap isi \"Password\" terlebih dahulu")
+                setError(binding.emailEditTextLayout, getString(R.string.error_empty_email))
+                setError(binding.passwordEditTextLayout, getString(R.string.error_empty_password))
                 return@setOnClickListener
             }
 
             if (email.isEmpty()) {
-                setError(binding.emailEditTextLayout, "Harap isi \"Email\" terlebih dahulu")
+                setError(binding.emailEditTextLayout, getString(R.string.error_empty_email))
                 return@setOnClickListener
             } else {
                 clearError(binding.emailEditTextLayout)
             }
 
             if (!isValidEmail(email)) {
-                setError(binding.emailEditTextLayout, "\"Email\" harus valid menggunakan @")
+                setError(binding.emailEditTextLayout, getString(R.string.error_invalid_email))
                 return@setOnClickListener
             } else {
                 clearError(binding.emailEditTextLayout)
             }
 
             if (password.isEmpty()) {
-                setError(binding.passwordEditTextLayout, "Harap isi \"Password\" terlebih dahulu")
+                setError(binding.passwordEditTextLayout, getString(R.string.error_empty_password))
                 return@setOnClickListener
             } else {
                 clearError(binding.passwordEditTextLayout)
             }
 
             if (password.length < 8) {
-                setError(binding.passwordEditTextLayout, "Password harus memiliki setidaknya 8 karakter")
+                setError(binding.passwordEditTextLayout, getString(R.string.error_short_password))
                 return@setOnClickListener
             } else {
                 clearError(binding.passwordEditTextLayout)
@@ -116,9 +119,9 @@ class LoginActivity : AppCompatActivity() {
                     is ResultState.Error -> {
                         showLoading(false)
                         AlertDialog.Builder(this).apply {
-                            setTitle("Login Gagal")
-                            setMessage("Email atau Password yang anda masukkan salah")
-                            setPositiveButton("Coba Lagi") { _, _ -> }
+                            setTitle(getString(R.string.login_failed_title))
+                            setMessage(getString(R.string.login_failed_message))
+                            setPositiveButton(getString(R.string.retry)) { _, _ -> }
                             create()
                             show()
                         }
@@ -126,6 +129,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
     }
 
     private fun saveLoginStatus(isLoggedIn: Boolean) {
@@ -153,7 +157,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val password = s.toString()
                 if (password.length < 8) {
-                    setError(binding.passwordEditTextLayout, "Password harus memiliki setidaknya 8 karakter")
+                    setError(binding.passwordEditTextLayout, getString(R.string.error_short_password))
                 } else {
                     clearError(binding.passwordEditTextLayout)
                 }
@@ -173,13 +177,13 @@ class LoginActivity : AppCompatActivity() {
     private fun setError(textInputLayout: TextInputLayout, error: String) {
         textInputLayout.error = error
         if (textInputLayout == binding.passwordEditTextLayout) {
-            textInputLayout.errorIconDrawable = null // Hide the error icon for the password field
+            textInputLayout.errorIconDrawable = null // Menyembunyikan icon error pada password
         }
     }
 
     private fun clearError(textInputLayout: TextInputLayout) {
         textInputLayout.error = null
-        textInputLayout.errorIconDrawable = null // Also clear the error icon when clearing the error
+        textInputLayout.errorIconDrawable = null // Hapus icon kesalahan
     }
 
     private fun showLoading(isLoading: Boolean) {

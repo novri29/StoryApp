@@ -1,4 +1,4 @@
-package com.nov.storyapp.main
+package com.nov.storyapp.view.setting
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -8,14 +8,15 @@ import com.nov.storyapp.data.model.DataModel
 import com.nov.storyapp.data.repository.StoryRepository
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: StoryRepository): ViewModel() {
-    fun getLoginData(): LiveData<DataModel> {
-        return repository.getSession().asLiveData()
-    }
+class SettingViewModel(private val repository: StoryRepository) :  ViewModel() {
 
-    suspend fun logout() {
+    fun logout() {
         viewModelScope.launch {
             repository.logout()
         }
+    }
+
+    fun getData(): LiveData<DataModel> {
+        return repository.getSession().asLiveData()
     }
 }

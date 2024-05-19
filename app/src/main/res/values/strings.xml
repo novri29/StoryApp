@@ -1,37 +1,56 @@
 <resources>
-    <string name="app_name">StoryApp</string>
-    <string name="register">Daftar</string>
+    <string name="app_name">Dicoding StoryApp</string>
     <string name="login">Masuk</string>
-    <string name="message_welcome_page">Mau belajar Android, iOS, Machine Learning, Cloud, Front-End, Back-End, dan bidang IT lainnya? Di Dicoding aja!</string>
-    <string name="title_welcome_page">Selamat datang di Dicoding!</string>
-    <string name="title_signup_page">Lengkapi data dirimu di bawah ini</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-
-    <string name="name">Nama</string>
-    <string name="message_main_page">Selamat Belajar di Dicoding.</string>
-    <string name="greeting">Halo %1$s,</string>
+    <string name="register">Daftar</string>
     <string name="logout">Keluar</string>
-    <string name="title_activity_login2">LoginActivity2</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-
-    <string name="setting">Setting</string>
-    <string name="story">Description story</string>
-    <string name="cameraX">CameraX</string>
-    <string name="gallery">Gallery</string>
-    <string name="post_story">Post Your Story Here</string>
-    <string name="insert">Insert Story</string>
-    <string name="login_here">Login Here</string>
+    <string name="greeting" translatable="false">Halo %1$s,</string>
+    <string name="title_signup_page">Lengkapi data dirimu di bawah ini</string>
+    <string name="title_welcome_page">Selamat datang di Dicoding MyStory!</string>
+    <string name="message_welcome_page">Mau belajar berbagi cerita menggunakan foto dan juga deskripsi, dapat bergabung dengan Dicoding MyStory </string>
+    <string name="email" translatable="false">Email</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="name">Nama</string>
+    <string name="setting">Pengaturan</string>
+    <string name="story">Deskripsi story</string>
+    <string name="cameraX" translatable="false">CameraX</string>
+    <string name="gallery" translatable="false">Gallery</string>
+    <string name="post_story">Posting Cerita Anda Disini</string>
+    <string name="insert">Masukkan Story</string>
+    <string name="login_here">Masuk Disini</string>
     <string name="allready_account">Sudah punya akun ?</string>
     <string name="no_account">Belum punya akun ?</string>
-    <string name="register_here">Register Here</string>
+    <string name="register_here">Daftar Disini</string>
     <string name="title_login_page">Sudah siap untuk berbagi cerita ?</string>
-    <string name="message_login_page">Login dibawah ini</string>
+    <string name="message_login_page">Masuk dibawah ini</string>
+    <string name="ganti_bahasa">Ganti Bahasa</string>
+    <string name="detail_activity">Aktivitas Detail</string>
+    <string name="back">Kembali</string>
+    <string name="guest">Post Tamu</string>
+    <string name="or">Atau</string>
+    <!--Get String -->
+    <string name="story_not_found">Cerita tidak ditemukan</string>
+    <string name="story_id_missing">ID cerita tidak ada</string>
+    <string name="story_id_log">ID Cerita: %1$s</string>
+    <string name="image_capture_error">Error Pengambilan Gambar</string>
+    <string name="camera_open_error">Kesalahan Membuka Kamera</string>
+    <string name="error_empty_email">Harap isi "Email" terlebih dahulu</string>
+    <string name="error_empty_password">Harap isi "Password" terlebih dahulu</string>
+    <string name="error_invalid_email">"Email" harus valid menggunakan @</string>
+    <string name="error_short_password">Password harus memiliki setidaknya 8 karakter</string>
+    <string name="login_failed_title">Login Gagal</string>
+    <string name="login_failed_message">Email atau Password yang anda masukkan salah</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="error_empty_name">Harap isi "Nama" terlebih dahulu</string>
+    <string name="register_success_title">Pendaftaran Berhasil</string>
+    <string name="register_success_message">Akun dengan %1$s sudah dapat digunakan</string>
+    <string name="continuee">Lanjut</string>
+    <string name="register_failed_title">Maaf...</string>
+    <string name="hello" translatable="false">Hello, %1$s</string>
+    <string name="logout_title">Keluar</string>
+    <string name="logout_message">Apakah Anda yakin ingin keluar?</string>
+    <string name="yes">Iya</string>
+    <string name="no">Tidak</string>
+    <string name="error_post_story">Error Membuat Postingan Story</string>
+    <string name="permission_success">Permission Berhasil</string>
+    <string name="permission_failed">Permission Gagal</string>
 </resources>

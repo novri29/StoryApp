@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeActivity">
+    tools:context=".view.home.HomeActivity">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -29,6 +29,7 @@
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/navy"
         android:text="@string/post_story"
+        android:transitionName="buttonPost"
         app:cornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

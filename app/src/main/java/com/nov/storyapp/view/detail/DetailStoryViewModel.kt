@@ -1,4 +1,4 @@
-package com.nov.storyapp.detail
+package com.nov.storyapp.view.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package com.nov.storyapp.home
+package com.nov.storyapp.view.home
 
 import android.provider.ContactsContract.Data
 import androidx.lifecycle.LiveData

@@ -1,4 +1,4 @@
-package com.nov.storyapp.login
+package com.nov.storyapp.view.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

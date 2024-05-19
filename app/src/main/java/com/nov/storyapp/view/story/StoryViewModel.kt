@@ -1,4 +1,4 @@
-package com.nov.storyapp.story
+package com.nov.storyapp.view.story
 
 import android.credentials.CredentialDescription
 import androidx.lifecycle.LiveData
@@ -19,4 +19,10 @@ class StoryViewModel(private val repository: StoryRepository) : ViewModel() {
     fun getDataLogin(): LiveData<DataModel> {
         return repository.getSession().asLiveData()
     }
+
+    fun postStoryGuest(
+        multipartBody: MultipartBody.Part,
+        description: RequestBody
+    ): LiveData<Result<UploadStoryResponse>> =
+        repository.postStoryGuest(multipartBody, description)
 }
