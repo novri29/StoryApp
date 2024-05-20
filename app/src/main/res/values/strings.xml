@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dicoding StoryApp</string>
+    <string name="app_name">Dicoding MyStory</string>
     <string name="login">Masuk</string>
     <string name="register">Daftar</string>
     <string name="logout">Keluar</string>
