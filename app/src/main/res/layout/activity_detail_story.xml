@@ -30,6 +30,7 @@
             android:layout_marginTop="24dp"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/iv_detailPhoto"
             app:layout_constraintTop_toBottomOf="@+id/iv_detailPhoto"
             tools:text="@tools:sample/lorem" />
@@ -39,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/tv_detailName"
             app:layout_constraintTop_toBottomOf="@+id/tv_detailName"
             tools:text="@tools:sample/lorem" />
@@ -51,6 +53,7 @@
             android:layout_marginTop="8dp"
             android:justificationMode="inter_word"
             android:textSize="14sp"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/tv_detailDate"
             app:layout_constraintTop_toBottomOf="@+id/tv_detailDate"
             tools:text="@tools:sample/lorem/random" />

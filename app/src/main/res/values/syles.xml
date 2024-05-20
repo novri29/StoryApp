@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextInputLayoutErrorStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Outline color when focused -->
+        <item name="boxStrokeColor">@color/black</item>
+        <!-- Outline color when error -->
+        <item name="errorTextColor">@color/error_red</item>
+        <item name="hintTextColor">@color/black</item>
+        <item name="helperTextTextColor">@color/black</item>
+        <!-- Box stroke color in different states -->
+        <item name="boxStrokeErrorColor">@color/error_red</item>
+    </style>
+</resources>

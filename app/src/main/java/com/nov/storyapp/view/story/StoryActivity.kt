@@ -83,39 +83,47 @@ class StoryActivity : AppCompatActivity() {
 
     private fun postStory() {
         currentImageUri?.let {
-            val imageFile = uriToFile(it, this@StoryActivity).reduceFileImage()
-            val description = binding.edDescription.text.toString()
+            val imageFile = uriToFile(it, this@StoryActivity)
+            try {
+                val reducedFile = imageFile.reduceFileImage()
+                val description = binding.edDescription.text.toString()
 
-            val requestBody = description.toRequestBody("text/plain".toMediaType())
-            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+                val requestBody = description.toRequestBody("text/plain".toMediaType())
+                val requestImageFile = reducedFile.asRequestBody("image/jpeg".toMediaType())
 
-            val multipartBody = MultipartBody.Part.createFormData(
-                "photo",
-                imageFile.name,
-                requestImageFile
-            )
+                val multipartBody = MultipartBody.Part.createFormData(
+                    "photo",
+                    reducedFile.name,
+                    requestImageFile
+                )
 
-            viewModel.postStory(multipartBody, requestBody).observe(this) {
-                when (it) {
-                    is ResultState.Error -> {
-                        Toast.makeText(
-                            this@StoryActivity, getString(R.string.error_post_story), Toast.LENGTH_SHORT
-                        ).show()
-                        showLoading(false)
-                    }
-                    ResultState.Loading -> {
-                        showLoading(true)
-                    }
-                    is ResultState.Success -> {
-                        showLoading(false)
-                        Toast.makeText(
-                            this@StoryActivity, it.data.message, Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                viewModel.postStory(multipartBody, requestBody).observe(this) {
+                    when (it) {
+                        is ResultState.Error -> {
+                            Toast.makeText(
+                                this@StoryActivity, getString(R.string.error_post_story), Toast.LENGTH_SHORT
+                            ).show()
+                            showLoading(false)
+                        }
+                        ResultState.Loading -> {
+                            showLoading(true)
+                        }
+                        is ResultState.Success -> {
+                            showLoading(false)
+                            Toast.makeText(
+                                this@StoryActivity, it.data.message, Toast.LENGTH_SHORT
+                            ).show()
+                            val intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@StoryActivity, getString(R.string.error_reduce_image), Toast.LENGTH_SHORT
+                ).show()
+                Log.e("StoryActivity", "Error reducing image file", e)
             }
         }
     }
@@ -123,46 +131,54 @@ class StoryActivity : AppCompatActivity() {
     private fun postStoryGuest() {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this@StoryActivity)
-            val descriptionText = binding.edDescription.text.toString()
+            try {
+                val reducedFile = imageFile.reduceFileImage()
+                val descriptionText = binding.edDescription.text.toString()
 
-            val requestBody = descriptionText.toRequestBody("text/plain".toMediaType())
-            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+                val requestBody = descriptionText.toRequestBody("text/plain".toMediaType())
+                val requestImageFile = reducedFile.asRequestBody("image/jpeg".toMediaType())
 
-            val multipartBody = MultipartBody.Part.createFormData(
-                "photo",
-                imageFile.name,
-                requestImageFile
-            )
+                val multipartBody = MultipartBody.Part.createFormData(
+                    "photo",
+                    reducedFile.name,
+                    requestImageFile
+                )
 
-            viewModel.postStoryGuest(multipartBody, requestBody).observe(this) { result ->
-                when (result) {
-                    is ResultState.Loading -> {
-                        showLoading(true)
-                    }
-                    is ResultState.Success -> {
-                        showLoading(false)
-                        val intent = Intent(this@StoryActivity, MainActivity::class.java)
-                        val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            this@StoryActivity,
-                            Pair(binding.ivStory, "logo")
-                        )
-                        startActivity(intent, optionsCompat.toBundle())
-                        finish()
-                        Toast.makeText(
-                            this@StoryActivity,
-                            result.data.message,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    is ResultState.Error -> {
-                        showLoading(false)
-                        Toast.makeText(
-                            this@StoryActivity,
-                            getString(R.string.error_post_story),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                viewModel.postStoryGuest(multipartBody, requestBody).observe(this) { result ->
+                    when (result) {
+                        is ResultState.Error -> {
+                            showLoading(false)
+                            Toast.makeText(
+                                this@StoryActivity,
+                                getString(R.string.error_post_story),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is ResultState.Loading -> {
+                            showLoading(true)
+                        }
+                        is ResultState.Success -> {
+                            showLoading(false)
+                            val intent = Intent(this@StoryActivity, MainActivity::class.java)
+                            val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                this@StoryActivity,
+                                Pair(binding.ivStory, "logo")
+                            )
+                            startActivity(intent, optionsCompat.toBundle())
+                            finish()
+                            Toast.makeText(
+                                this@StoryActivity,
+                                result.data.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@StoryActivity, getString(R.string.error_reduce_image), Toast.LENGTH_SHORT
+                ).show()
+                Log.e("StoryActivity", "Error reducing image file", e)
             }
         }
     }

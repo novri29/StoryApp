@@ -6,4 +6,5 @@
     <color name="red">#800000</color>
     <color name="link_color">#0000EE</color>
     <color name="dark_blue">#2D3E50</color>
+    <color name="error_red">#FF0000</color>
 </resources>

@@ -129,7 +129,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun saveLoginStatus(isLoggedIn: Boolean) {

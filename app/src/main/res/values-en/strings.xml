@@ -47,4 +47,5 @@
     <string name="back">Back</string>
     <string name="guest">Guest Post</string>
     <string name="or">Or</string>
+    <string name="error_reduce_image">Failure to Reduce Size</string>
 </resources>

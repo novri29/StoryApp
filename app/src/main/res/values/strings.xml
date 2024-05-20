@@ -53,4 +53,5 @@
     <string name="error_post_story">Error Membuat Postingan Story</string>
     <string name="permission_success">Permission Berhasil</string>
     <string name="permission_failed">Permission Gagal</string>
+    <string name="error_reduce_image">Gagal Mengurangi Ukuran</string>
 </resources>

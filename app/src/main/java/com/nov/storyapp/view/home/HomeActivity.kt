@@ -1,6 +1,8 @@
 package com.nov.storyapp.view.home
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -40,6 +42,11 @@ class HomeActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.apply {
+            title = getString(R.string.app_name)
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
 
         setupView()
         itemDecoration()
