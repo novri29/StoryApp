@@ -70,15 +70,22 @@ class StoryActivity : AppCompatActivity() {
         }
 
         binding.buttonSubmit.setOnClickListener {
-            viewModel.getDataLogin().observe(this) { loginData ->
-                if (loginData.isLogin) {
-                    postStory()
-                } else {
-                    postStoryGuest()
+            if (currentImageUri == null || binding.edDescription.text.toString().isEmpty()) {
+                Toast.makeText(
+                    this@StoryActivity,
+                    getString(R.string.empty_photo_or_description),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                viewModel.getDataLogin().observe(this) { loginData ->
+                    if (loginData.isLogin) {
+                        postStory()
+                    } else {
+                        postStoryGuest()
+                    }
                 }
             }
         }
-
     }
 
     private fun postStory() {
@@ -114,7 +121,15 @@ class StoryActivity : AppCompatActivity() {
                                 this@StoryActivity, it.data.message, Toast.LENGTH_SHORT
                             ).show()
                             val intent = Intent(this, HomeActivity::class.java)
-                            startActivity(intent)
+                            val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                this@StoryActivity,
+                                Pair(binding.ivStory, "logo"),
+                                Pair(binding.buttonGallery, "button1"),
+                                Pair(binding.buttonCamera, "button2"),
+                                Pair(binding.edDescription, "text"),
+                                Pair(binding.buttonSubmit, "button3")
+                            )
+                            startActivity(intent, optionsCompat.toBundle())
                             finish()
                         }
                     }

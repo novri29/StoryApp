@@ -54,4 +54,5 @@
     <string name="permission_success">Permission Berhasil</string>
     <string name="permission_failed">Permission Gagal</string>
     <string name="error_reduce_image">Gagal Mengurangi Ukuran</string>
+    <string name="empty_photo_or_description">Harap isi foto atau deskripsi terlebih dahulu</string>
 </resources>
