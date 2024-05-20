@@ -1,6 +1,5 @@
 package com.nov.storyapp.data.api
 
-import android.credentials.CredentialDescription
 import com.nov.storyapp.data.response.AllStoryResponse
 import com.nov.storyapp.data.response.DetailStoryResponse
 import com.nov.storyapp.data.response.LoginResponse
@@ -15,7 +14,6 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
-import java.io.File
 
 interface ApiService {
     @FormUrlEncoded

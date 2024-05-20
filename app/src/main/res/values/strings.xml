@@ -42,7 +42,7 @@
     <string name="retry">Coba Lagi</string>
     <string name="error_empty_name">Harap isi "Nama" terlebih dahulu</string>
     <string name="register_success_title">Pendaftaran Berhasil</string>
-    <string name="register_success_message">Akun dengan %1$s sudah dapat digunakan</string>
+    <string name="register_success_message">Pendaftaran berhasil, Silahkan Masuk Menggunakan Akun Terdaftar</string>
     <string name="continuee">Lanjut</string>
     <string name="register_failed_title">Maaf...</string>
     <string name="hello" translatable="false">Hello, %1$s</string>

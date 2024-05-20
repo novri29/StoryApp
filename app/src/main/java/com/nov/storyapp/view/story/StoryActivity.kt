@@ -22,7 +22,6 @@ import androidx.core.net.toUri
 import androidx.core.util.Pair
 import com.nov.storyapp.R
 import com.nov.storyapp.view.camera.CameraActivity
-
 import com.nov.storyapp.databinding.ActivityStoryBinding
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.helper.ViewModelFactory

@@ -1,6 +1,5 @@
 package com.nov.storyapp.view.home
 
-import android.provider.ContactsContract.Data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

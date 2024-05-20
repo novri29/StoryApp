@@ -34,7 +34,7 @@
     <string name="retry">Try Again</string>
     <string name="error_empty_name">Please fill in the Name first</string>
     <string name="register_success_title">Registration Successful</string>
-    <string name="register_success_message">Accounts with %1$s can already be used</string>
+    <string name="register_success_message">Registration successful, please login using your registered account</string>
     <string name="register_failed_title">Sorry...</string>
     <string name="continuee">Next</string>
     <string name="logout_title">Logout</string>
