@@ -23,6 +23,6 @@ class StoryViewModel(private val repository: StoryRepository) : ViewModel() {
     fun postStoryGuest(
         multipartBody: MultipartBody.Part,
         description: RequestBody
-    ): LiveData<Result<UploadStoryResponse>> =
+    ): LiveData<ResultState<UploadStoryResponse>> =
         repository.postStoryGuest(multipartBody, description)
 }

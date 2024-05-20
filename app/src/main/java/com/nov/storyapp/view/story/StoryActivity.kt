@@ -1,28 +1,35 @@
-package com.nov.storyapp.story
+package com.nov.storyapp.view.story
 
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.nov.storyapp.camera.CameraActivity
+import androidx.core.util.Pair
+import com.nov.storyapp.R
+import com.nov.storyapp.view.camera.CameraActivity
 
 import com.nov.storyapp.databinding.ActivityStoryBinding
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.helper.ViewModelFactory
 import com.nov.storyapp.helper.reduceFileImage
 import com.nov.storyapp.helper.uriToFile
-import com.nov.storyapp.home.HomeActivity
+import com.nov.storyapp.view.home.HomeActivity
+import com.nov.storyapp.view.main.MainActivity
 import com.yalantis.ucrop.UCrop
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -38,6 +45,14 @@ class StoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        supportActionBar?.apply {
+            title = getString(R.string.back)
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
         binding = ActivityStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -58,9 +73,12 @@ class StoryActivity : AppCompatActivity() {
             viewModel.getDataLogin().observe(this) { loginData ->
                 if (loginData.isLogin) {
                     postStory()
+                } else {
+                    postStoryGuest()
                 }
             }
         }
+
     }
 
     private fun postStory() {
@@ -81,7 +99,7 @@ class StoryActivity : AppCompatActivity() {
                 when (it) {
                     is ResultState.Error -> {
                         Toast.makeText(
-                            this@StoryActivity, "Error Post Story", Toast.LENGTH_SHORT
+                            this@StoryActivity, getString(R.string.error_post_story), Toast.LENGTH_SHORT
                         ).show()
                         showLoading(false)
                     }
@@ -96,6 +114,53 @@ class StoryActivity : AppCompatActivity() {
                         val intent = Intent(this, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun postStoryGuest() {
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, this@StoryActivity)
+            val descriptionText = binding.edDescription.text.toString()
+
+            val requestBody = descriptionText.toRequestBody("text/plain".toMediaType())
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+
+            val multipartBody = MultipartBody.Part.createFormData(
+                "photo",
+                imageFile.name,
+                requestImageFile
+            )
+
+            viewModel.postStoryGuest(multipartBody, requestBody).observe(this) { result ->
+                when (result) {
+                    is ResultState.Loading -> {
+                        showLoading(true)
+                    }
+                    is ResultState.Success -> {
+                        showLoading(false)
+                        val intent = Intent(this@StoryActivity, MainActivity::class.java)
+                        val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            this@StoryActivity,
+                            Pair(binding.ivStory, "logo")
+                        )
+                        startActivity(intent, optionsCompat.toBundle())
+                        finish()
+                        Toast.makeText(
+                            this@StoryActivity,
+                            result.data.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    is ResultState.Error -> {
+                        showLoading(false)
+                        Toast.makeText(
+                            this@StoryActivity,
+                            getString(R.string.error_post_story),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
@@ -140,11 +205,11 @@ class StoryActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) {
         if (it) {
-            Toast.makeText(this, "Permission Berhasil", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.permission_success), Toast.LENGTH_SHORT).show()
             val intent = Intent(this, CameraActivity::class.java)
             cameraXLauncher.launch(intent)
         } else {
-            Toast.makeText(this, "Permission Gagal", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.permission_failed), Toast.LENGTH_SHORT).show()
         }
     }
 

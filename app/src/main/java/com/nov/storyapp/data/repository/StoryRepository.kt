@@ -132,6 +132,27 @@ class StoryRepository private constructor(
         }
     }
 
+    fun postStoryGuest(
+        multipartBody: MultipartBody.Part,
+        description: RequestBody
+    ): LiveData<ResultState<UploadStoryResponse>> = liveData {
+        emit(ResultState.Loading)
+        try {
+            val client = apiService.postStoryGuest(multipartBody, description)
+            if (client.error == false) {
+                emit(ResultState.Success(client))
+            } else {
+                emit(ResultState.Error(client.message ?: "Unknown error"))
+            }
+        } catch (e: HttpException) {
+            Log.e("PostStoryGuestHTTP", "${e.message}")
+            emit(ResultState.Error(e.message.toString()))
+        } catch (e: Exception) {
+            Log.e("PostStoryGuest", "${e.message}")
+            emit(ResultState.Error(e.message.toString()))
+        }
+    }
+
     companion object {
         private var instance: StoryRepository? = null
         fun getInstance(
