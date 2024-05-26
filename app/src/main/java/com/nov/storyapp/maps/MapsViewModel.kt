@@ -1,4 +1,4 @@
-package com.nov.storyapp
+package com.nov.storyapp.maps
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

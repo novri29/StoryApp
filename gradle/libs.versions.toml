@@ -57,6 +57,7 @@ pagingRuntimeKtx = { group = "androidx.paging", name = "paging-runtime-ktx", ver
 roomPaging = { group = "androidx.room", name = "room-paging", version.ref = "roomPaging" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

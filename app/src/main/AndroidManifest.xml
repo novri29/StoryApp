@@ -25,9 +25,10 @@
             android:value="AIzaSyCKUG-php57qXa-rLV7hZF2-b54ZgF6HSQ" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".maps.MapsActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".view.home.HomeActivity"/>
         <activity
             android:name=".view.camera.CameraActivity"
             android:exported="false" />

@@ -57,4 +57,8 @@
     <string name="empty_photo_or_description">Harap isi foto atau deskripsi terlebih dahulu</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="maps">Maps</string>
+    <string name="normal_type">Normal</string>
+    <string name="satellite_type">Satelite</string>
+    <string name="terrain_type">Terrain</string>
+    <string name="hybrid_type">Hybrid</string>
 </resources>

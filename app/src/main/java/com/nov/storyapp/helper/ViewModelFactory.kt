@@ -3,7 +3,7 @@ package com.nov.storyapp.helper
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.nov.storyapp.MapsViewModel
+import com.nov.storyapp.maps.MapsViewModel
 import com.nov.storyapp.view.story.StoryViewModel
 import com.nov.storyapp.view.detail.DetailStoryViewModel
 import com.nov.storyapp.view.home.HomeViewModel

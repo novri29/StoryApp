@@ -3,13 +3,20 @@ package com.nov.storyapp.data.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.nov.storyapp.helper.AuthPreference
 import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.data.api.ApiConfig
 import com.nov.storyapp.data.api.ApiService
+import com.nov.storyapp.data.database.StoryDatabase
 import com.nov.storyapp.data.model.DataModel
+import com.nov.storyapp.data.paging.StoryRemoteMediator
 import com.nov.storyapp.data.response.AllStoryResponse
 import com.nov.storyapp.data.response.ErrorResponse
 import com.nov.storyapp.data.response.ListStoryItem
@@ -23,6 +30,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class StoryRepository private constructor(
+    private val storyDatabase: StoryDatabase,
     private val apiService: ApiService,
     private val authPreference: AuthPreference
 ){
@@ -83,17 +91,17 @@ class StoryRepository private constructor(
         }
     }
 
-    fun getStories() = liveData {
-        emit(ResultState.Loading)
-        try {
-            val response = apiService.getStories()
-            emit(ResultState.Success(response))
-        } catch (e: HttpException) {
-            val jsonInString = e.response()?.errorBody()?.string()
-            val errorBody = Gson().fromJson(jsonInString, ErrorResponse::class.java)
-            val errorMessage = errorBody.message
-            ResultState.Error(errorMessage.toString())
-        }
+    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
+            pagingSourceFactory = {
+                storyDatabase.storyDao().getAllStory()
+            }
+        ).liveData
     }
 
     fun getDetailStories(id: String) = liveData {
@@ -171,11 +179,12 @@ class StoryRepository private constructor(
     companion object {
         private var instance: StoryRepository? = null
         fun getInstance(
+            storyDatabase: StoryDatabase,
             apiService: ApiService,
             authPreference: AuthPreference
         ): StoryRepository =
             instance ?: synchronized(this){
-                instance ?: StoryRepository(apiService, authPreference)
+                instance ?: StoryRepository(storyDatabase,apiService, authPreference)
             }.also { instance = it }
     }
 }

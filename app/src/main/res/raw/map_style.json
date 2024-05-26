@@ -1,0 +1,37 @@
+[
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "saturation": 45
+      },
+      {
+        "lightness": -40
+      }
+    ]
+  },
+  {
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "weight": 1.5
+      }
+    ]
+  }
+]

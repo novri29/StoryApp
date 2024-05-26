@@ -89,6 +89,7 @@ dependencies {
     // Paging
     implementation(libs.pagingRuntimeKtx)
     implementation(libs.roomPaging)
+    implementation(libs.androidx.room.paging)
 
     implementation(libs.play.services.location)
     implementation(libs.play.services.maps)
