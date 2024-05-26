@@ -78,5 +78,7 @@ class DetailStoryActivity : AppCompatActivity() {
 
     companion object {
         const val ID = "ID"
+        const val EXTRA_LAT = "EXTRA_LAT"
+        const val EXTRA_LNG = "EXTRA_LNG"
     }
 }

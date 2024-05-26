@@ -8,4 +8,10 @@
         app:showAsAction="always"
         android:title="@string/setting" />
 
+    <item
+        android:id="@+id/btnMap"
+        android:icon="@drawable/ic_baseline_map_24"
+        app:showAsAction="always"
+        android:title="@string/maps" />
+
 </menu>

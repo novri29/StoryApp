@@ -6,6 +6,8 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -17,21 +19,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StoryApp"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCKUG-php57qXa-rLV7hZF2-b54ZgF6HSQ" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".view.camera.CameraActivity"
             android:exported="false" />
         <activity
             android:name=".view.story.StoryActivity"
             android:exported="false"
-            android:parentActivityName=".view.home.HomeActivity"/>
+            android:parentActivityName=".view.home.HomeActivity" />
         <activity
             android:name=".view.detail.DetailStoryActivity"
             android:exported="false"
-            android:parentActivityName=".view.home.HomeActivity"/>
+            android:parentActivityName=".view.home.HomeActivity" />
         <activity
             android:name=".view.setting.SettingActivity"
             android:exported="false"
-            android:parentActivityName=".view.home.HomeActivity"/>
+            android:parentActivityName=".view.home.HomeActivity" />
         <activity
             android:name=".view.home.HomeActivity"
             android:exported="false" />
@@ -44,7 +55,7 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".view.main.MainActivity"
             android:exported="true">

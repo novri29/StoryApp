@@ -3,6 +3,7 @@ package com.nov.storyapp.helper
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.nov.storyapp.MapsViewModel
 import com.nov.storyapp.view.story.StoryViewModel
 import com.nov.storyapp.view.detail.DetailStoryViewModel
 import com.nov.storyapp.view.home.HomeViewModel
@@ -39,6 +40,9 @@ class ViewModelFactory(private val repository: StoryRepository) : ViewModelProvi
             }
             modelClass.isAssignableFrom(StoryViewModel::class.java) -> {
                 StoryViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

@@ -31,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.core.util.Pair
+import com.nov.storyapp.MapsActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -159,11 +160,20 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(intent)
                 return true
             }
+            R.id.btnMap -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
+    }
+
+    companion object {
+        const val EXTRA_MAP = "EXTRA_MAP"
     }
 }

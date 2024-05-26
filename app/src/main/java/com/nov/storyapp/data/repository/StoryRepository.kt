@@ -10,7 +10,9 @@ import com.nov.storyapp.helper.ResultState
 import com.nov.storyapp.data.api.ApiConfig
 import com.nov.storyapp.data.api.ApiService
 import com.nov.storyapp.data.model.DataModel
+import com.nov.storyapp.data.response.AllStoryResponse
 import com.nov.storyapp.data.response.ErrorResponse
+import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.data.response.LoginResponse
 import com.nov.storyapp.data.response.RegisterResponse
 import com.nov.storyapp.data.response.UploadStoryResponse
@@ -152,6 +154,19 @@ class StoryRepository private constructor(
             emit(ResultState.Error(e.message.toString()))
         }
     }
+
+    fun getStoriesWithLocation(): LiveData<ResultState<List<ListStoryItem>>> = liveData {
+        emit(ResultState.Loading)
+        try {
+            val client = apiService.getStoriesWithLocation()
+            val nonNullList = client.listStory?.filterNotNull() ?: emptyList()
+            emit(ResultState.Success(nonNullList))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.message.toString()))
+            Log.e("GetMapStories", e.message.toString())
+        }
+    }
+
 
     companion object {
         private var instance: StoryRepository? = null

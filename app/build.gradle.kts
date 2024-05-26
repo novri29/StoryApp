@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -51,33 +52,47 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofitGson)
+    implementation(libs.okhttpLoggingInterceptor)
+    implementation(libs.lifecycleRuntimeKtx)
 
-    //KTX
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    implementation("androidx.activity:activity-ktx:1.7.2")
+    // KTX
+    implementation(libs.datastorePreferences)
+    implementation(libs.lifecycleViewModelKtx)
+    implementation(libs.lifecycleLiveDataKtx)
+    implementation(libs.activityKtx)
 
-    implementation ("com.google.android.material:material:1.3.0")
+    // Material Design
+    implementation(libs.material)
 
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    // Glide
+    implementation(libs.glide)
 
-    implementation ("com.google.code.gson:gson:2.8.8")
+    // Gson
+    implementation(libs.gson)
 
-    //Camera
-    implementation("androidx.camera:camera-camera2:1.3.3")
-    implementation("androidx.camera:camera-lifecycle:1.3.3")
-    implementation("androidx.camera:camera-view:1.3.3")
+    // Camera
+    implementation(libs.cameraCamera2)
+    implementation(libs.cameraLifecycle)
+    implementation(libs.cameraView)
 
-    //UCrop
-    implementation ("com.github.yalantis:ucrop:2.2.8")
+    // UCrop
+    implementation(libs.ucrop)
+
+    // Paging
+    implementation(libs.pagingRuntimeKtx)
+    implementation(libs.roomPaging)
+
+    implementation(libs.play.services.location)
+    implementation(libs.play.services.maps)
+
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.room:room-runtime:2.6.1")
 }
