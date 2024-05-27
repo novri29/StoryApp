@@ -21,7 +21,6 @@ glide = "4.12.0"
 gson = "2.8.8"
 camera = "1.3.3"
 ucrop = "2.2.8"
-paging = "3.1.0"
 roomPaging = "2.4.0-rc01"
 googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
 playServicesMaps = "18.2.0"
@@ -30,6 +29,8 @@ coreTesting = "2.1.0"
 kotlinxCoroutinesTest = "1.6.1"
 mockitoCore = "4.4.0"
 mockitoInline = "4.4.0"
+roomKtx = "2.6.1"
+pagingRuntimeKtx = "3.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,11 +58,12 @@ cameraCamera2 = { group = "androidx.camera", name = "camera-camera2", version.re
 cameraLifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camera" }
 cameraView = { group = "androidx.camera", name = "camera-view", version.ref = "camera" }
 ucrop = { group = "com.github.yalantis", name = "ucrop", version.ref = "ucrop" }
-pagingRuntimeKtx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
-roomPaging = { group = "androidx.room", name = "room-paging", version.ref = "roomPaging" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
-androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomPaging" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }

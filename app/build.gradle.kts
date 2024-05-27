@@ -93,16 +93,13 @@ dependencies {
     implementation(libs.ucrop)
 
     // Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
-    implementation("androidx.room:room-paging:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.room.paging)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.play.services.location)
     implementation(libs.play.services.maps)
-
-    implementation("androidx.room:room-ktx:2.6.1")
-    implementation("androidx.room:room-runtime:2.6.1")
 
     androidTestImplementation(libs.androidx.core.testing) //InstantTaskExecutorRule
     androidTestImplementation(libs.kotlinx.coroutines.test) //TestDispatcher
