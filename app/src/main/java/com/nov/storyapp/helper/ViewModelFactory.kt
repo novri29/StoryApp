@@ -53,6 +53,7 @@ class ViewModelFactory(private val repository: StoryRepository) : ViewModelProvi
         private var INSTANCE: ViewModelFactory? = null
         @JvmStatic
         fun getInstance(context: Context): ViewModelFactory {
+            (Injection.provideRepository(context))
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
                     INSTANCE = ViewModelFactory(Injection.provideRepository(context))
