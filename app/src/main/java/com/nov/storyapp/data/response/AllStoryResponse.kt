@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AllStoryResponse(
 	@field:SerializedName("listStory")
-	val listStory: List<ListStoryItem?>? = null,
+	val listStory: List<ListStoryItem>? = null,
 
 	@field:SerializedName("error")
 	val error: Boolean? = null,
@@ -16,7 +16,7 @@ data class AllStoryResponse(
 )
 @Entity(tableName = "story")
 data class ListStoryItem(
-	@PrimaryKey
+
 	@field:SerializedName("photoUrl")
 	val photoUrl: String? = null,
 
@@ -32,8 +32,9 @@ data class ListStoryItem(
 	@field:SerializedName("lon")
 	val lon: Double? = null,
 
+	@PrimaryKey
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: String,
 
 	@field:SerializedName("lat")
 	val lat: Double? = null

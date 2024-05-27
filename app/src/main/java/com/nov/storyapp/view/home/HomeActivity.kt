@@ -51,8 +51,8 @@ class HomeActivity : AppCompatActivity() {
 
         setupView()
         itemDecoration()
+        recycleViewSetup()
         adapter = HomeAdapter()
-
         binding.rvStory.adapter = adapter
 
         // Load cache
@@ -67,9 +67,15 @@ class HomeActivity : AppCompatActivity() {
             if (!user.isLogin) {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
-            } else {
-                observeStoryItems()
             }
+            viewModel.getStoryPagingData().observe(this) { story ->
+                adapter.submitData(lifecycle, story)
+            }
+            binding.rvStory.adapter = adapter.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    adapter.retry()
+                }
+            )
         }
 
         binding.buttonPost.setOnClickListener {
@@ -83,30 +89,12 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeStoryItems() {
-        viewModel.storyItem.observe(this) { story ->
-            if (story != null) {
-                when (story) {
-                    is ResultState.Loading -> {
-                        showLoading(false)
-                    }
-                    is ResultState.Success -> {
-                        val storyData = story.data.listStory
-                        adapter.setList(storyData)
-                        showLoading(false)
+    private fun recycleViewSetup() {
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvStory.layoutManager = layoutManager
 
-                        // Save to cache in a coroutine
-                        lifecycleScope.launch {
-                            saveCache(storyData)
-                        }
-                    }
-                    is ResultState.Error -> {
-                        showLoading(false)
-                        Toast.makeText(this, "ERROR: ${story.error}", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvStory.addItemDecoration(itemDecoration)
     }
 
     private suspend fun saveCache(stories: List<ListStoryItem?>?) {

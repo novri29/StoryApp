@@ -1,42 +1,23 @@
 package com.nov.storyapp.view.home
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.nov.storyapp.data.model.DataModel
 import com.nov.storyapp.data.repository.StoryRepository
-import com.nov.storyapp.data.response.AllStoryResponse
-import com.nov.storyapp.helper.ResultState
+import com.nov.storyapp.data.response.ListStoryItem
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: StoryRepository) :  ViewModel(){
-    private val listStoryItem = MutableLiveData<ResultState<AllStoryResponse>>()
-    val storyItem: LiveData<ResultState<AllStoryResponse>> = listStoryItem
-    init {
-        getStories()
-    }
+class HomeViewModel(private val repository: StoryRepository) : ViewModel() {
 
-    private fun getStories() {
-        viewModelScope.launch {
-            val allstoryResponse = repository.getStories()
-            allstoryResponse.asFlow().collect {
-                listStoryItem.value = it
-            }
-        }
+    fun getStoryPagingData(): LiveData<PagingData<ListStoryItem>> {
+        return repository.getStories().cachedIn(viewModelScope)
     }
 
     fun getSession(): LiveData<DataModel> {
         return repository.getSession().asLiveData()
     }
-
-    fun logout() {
-        viewModelScope.launch {
-            repository.logout()
-        }
-    }
-
-
 }

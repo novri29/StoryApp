@@ -35,51 +35,54 @@ class StoryRemoteMediator(
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
-                val prevKey = remoteKeys?.prevKey
+                remoteKeys?.prevKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                val nextKey = remoteKeys?.nextKey
+                remoteKeys?.nextKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
-                nextKey
             }
         }
 
         try {
             val responseData = apiService.getStories(page, state.config.pageSize)
 
-            val endOfPaginationReached = responseData.listStory.isEmpty()
+            val endOfPaginationReached = responseData.listStory?.isEmpty()
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     database.remoteKeysDao().deleteRemoteKeys()
                     database.storyDao().deleteAll()
                 }
+
                 val prevKey = if (page == 1) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
-                val keys = responseData.listStory.map { story ->
-                    RemoteKeys(id = story.id, prevKey = prevKey, nextKey = nextKey)
+                val nextKey = if (endOfPaginationReached == true) null else page + 1
+
+                val keys = responseData.listStory?.map {
+                    RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
-                database.remoteKeysDao().insertAll(keys)
-                database.storyDao().insertStory(responseData.listStory)
+
+                if (keys != null) {
+                    database.remoteKeysDao().insertAll(keys)
+                }
+                responseData.listStory?.let { database.storyDao().insertStory(it) }
             }
-            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached == true)
         } catch (exception: Exception) {
             return MediatorResult.Error(exception)
         }
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, ListStoryItem>): RemoteKeys? {
-        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { story ->
-            database.remoteKeysDao().getRemoteKeysId(story.id)
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let {
+            it.id.let { id -> database.remoteKeysDao().getRemoteKeysId(id) }
         }
     }
 
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, ListStoryItem>): RemoteKeys? {
-        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { story ->
-            database.remoteKeysDao().getRemoteKeysId(story.id)
+        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let {
+            it.id.let { id -> database.remoteKeysDao().getRemoteKeysId(id) }
         }
     }
 

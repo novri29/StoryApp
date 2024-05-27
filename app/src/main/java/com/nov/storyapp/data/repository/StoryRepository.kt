@@ -17,7 +17,6 @@ import com.nov.storyapp.data.api.ApiService
 import com.nov.storyapp.data.database.StoryDatabase
 import com.nov.storyapp.data.model.DataModel
 import com.nov.storyapp.data.paging.StoryRemoteMediator
-import com.nov.storyapp.data.response.AllStoryResponse
 import com.nov.storyapp.data.response.ErrorResponse
 import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.data.response.LoginResponse
@@ -62,7 +61,6 @@ class StoryRepository private constructor(
     }
 
     suspend fun login(email: String, password: String): ResultState<LoginResponse> {
-
         ResultState.Loading
         try {
             val response = apiService.login(email, password)
@@ -77,7 +75,7 @@ class StoryRepository private constructor(
                         isLogin = true
                     )
                     saveSession(sesi)
-                    ApiConfig.token = loginResult.token ?: ""
+                    //ApiConfig.token = loginResult.token ?: ""
                     return ResultState.Success(response)
                 } else {
                     return ResultState.Error("Login is null")
@@ -94,10 +92,10 @@ class StoryRepository private constructor(
     fun getStories(): LiveData<PagingData<ListStoryItem>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
-            config = PagingConfig(
+            PagingConfig (
                 pageSize = 5
             ),
-            remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
+            remoteMediator = StoryRemoteMediator(apiService = apiService, database = storyDatabase),
             pagingSourceFactory = {
                 storyDatabase.storyDao().getAllStory()
             }
@@ -179,12 +177,12 @@ class StoryRepository private constructor(
     companion object {
         private var instance: StoryRepository? = null
         fun getInstance(
-            storyDatabase: StoryDatabase,
             apiService: ApiService,
-            authPreference: AuthPreference
+            authPreference: AuthPreference,
+            database: StoryDatabase
         ): StoryRepository =
             instance ?: synchronized(this){
-                instance ?: StoryRepository(storyDatabase,apiService, authPreference)
+                instance ?: StoryRepository(database,apiService, authPreference)
             }.also { instance = it }
     }
 }
