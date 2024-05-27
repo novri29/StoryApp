@@ -13,7 +13,7 @@ import com.nov.storyapp.data.response.ListStoryItem
 import com.nov.storyapp.databinding.StoriesItemBinding
 import com.nov.storyapp.helper.toDateFormat
 
-class HomeAdapter : PagingDataAdapter<ListStoryItem, HomeAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HomeAdapter : PagingDataAdapter<ListStoryItem, HomeAdapter.MyViewHolder>(HomeDiffCallback) {
     private var story: List<ListStoryItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -54,7 +54,7 @@ class HomeAdapter : PagingDataAdapter<ListStoryItem, HomeAdapter.MyViewHolder>(D
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
+        val HomeDiffCallback = object : DiffUtil.ItemCallback<ListStoryItem>() {
             override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
                 return oldItem == newItem
             }
